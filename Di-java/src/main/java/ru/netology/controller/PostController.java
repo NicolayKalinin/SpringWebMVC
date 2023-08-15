@@ -1,20 +1,12 @@
 package ru.netology.controller;
 
-import com.google.gson.Gson;
-import ru.netology.exception.NotFoundException;
 import ru.netology.model.Post;
 import ru.netology.service.PostService;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Reader;
-
-public class PostController {
-  public static final String APPLICATION_JSON = "application/json";
-  private final PostService service;
+import java.util.List;
 
   @RestController
-  @RequestMapping("/api/posts")
+  @RequestMapping
   public class PostController {
     private final PostService service;
 
@@ -27,7 +19,12 @@ public class PostController {
       return service.all();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
+    public Post getById() {
+      return getById(0L);
+    }
+
+    @GetMapping
     public Post getById(@PathVariable long id) {
       return service.getById(id);
     }
@@ -37,7 +34,7 @@ public class PostController {
       return service.save(post);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public void removeById(long id) {
       service.removeById(id);
     }

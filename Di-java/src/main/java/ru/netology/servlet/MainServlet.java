@@ -1,6 +1,6 @@
 package ru.netology.servlet;
 
-import ru.netology.controller.PostController;
+import ru.netology.controller.postController;
 import ru.netology.exception.NotFoundException;
 import ru.netology.exception.UnsupportedMethodException;
 import ru.netology.handler.HandlerKeyPair;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainServlet extends HttpServlet {
-  private PostController controller;
+  private postController controller;
   // Map< METHOD, LIST < Pair <ROUTE_TEMPLATE, HANDLER> > >
   private Map< String, List<HandlerKeyPair>> routerMap;
 
@@ -26,7 +26,7 @@ public class MainServlet extends HttpServlet {
   public void init() {
     final PostRepository repository = new PostRepositoryImpl();
     final var service = new PostService(repository);
-    controller = new PostController(service);
+    controller = new postController(service);
 
     initRouterMap();
   }
@@ -92,7 +92,7 @@ public class MainServlet extends HttpServlet {
               .handle(req, res);
 
     } catch (UnsupportedMethodException | NotFoundException e) {
-        res.setContentType(PostController.APPLICATION_JSON);
+        res.setContentType(postController.APPLICATION_JSON);
         res.setStatus(HttpServletResponse.SC_NOT_FOUND);
         res.getWriter().print("{ \"errorMessage\" : \"%s\" }".formatted(e.getMessage()));
     } catch (Exception e) {
